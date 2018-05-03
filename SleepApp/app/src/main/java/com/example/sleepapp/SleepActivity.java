@@ -21,7 +21,7 @@ public abstract class SleepActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wake_up);
+        setContentView(R.layout.activity_wake_up); //
         setSetTimeButton();
         setResetButton();
         this.timeText = (TextView) findViewById(R.id.timeText);
