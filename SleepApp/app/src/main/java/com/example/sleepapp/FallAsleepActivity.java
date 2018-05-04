@@ -2,7 +2,9 @@ package com.example.sleepapp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -11,6 +13,7 @@ public class FallAsleepActivity extends SleepActivity {
 
     private Button setDurationButton;
     private TextView durationText;
+    private Spinner setTimeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class FallAsleepActivity extends SleepActivity {
         min = 0;
         updateTime(hr, min);
         setSetDurationButton();
+        setSetTimeSpinner();
     }
 
     private void setSetDurationButton() {
@@ -42,6 +46,15 @@ public class FallAsleepActivity extends SleepActivity {
                 durationPickerDialog.show();
             }
         });
+    }
+
+    private void setSetTimeSpinner() {
+        this.setTimeSpinner = (Spinner) findViewById(R.id.setTimeSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.spinner_item,
+                getResources().getStringArray(R.array.times));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.setTimeSpinner.setAdapter(adapter);
     }
 
     private void updateTimerTime(int hours, int minutes) {
