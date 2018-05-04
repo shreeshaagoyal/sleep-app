@@ -12,25 +12,13 @@ import java.util.Calendar;
 
 public abstract class SleepActivity extends AppCompatActivity {
 
-    private Button setTimeButton;
-    private Button resetButton;
-    private int hr;
-    private int min;
-    private TextView timeText;
+    protected Button setTimeButton;
+    protected Button resetButton;
+    protected int hr;
+    protected int min;
+    protected TextView timeText;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wake_up); //
-        setSetTimeButton();
-        setResetButton();
-        this.timeText = (TextView) findViewById(R.id.timeText);
-        this.hr = 0;
-        this.min = 0;
-        updateTime(this.hr, this.min);
-    }
-
-    private void setSetTimeButton() {
+    protected void setSetTimeButton() {
         this.setTimeButton = (Button) this.findViewById(R.id.setTimeButton);
         this.setTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +37,7 @@ public abstract class SleepActivity extends AppCompatActivity {
         });
     }
 
-    private static String getTimeOfValue(int value) {
+    protected static String getTimeOfValue(int value) {
         if (value < 10) {
             return "0" + String.valueOf(value);
         } else {
@@ -57,11 +45,11 @@ public abstract class SleepActivity extends AppCompatActivity {
         }
     }
 
-    private void updateTime(int hours, int minutes) {
+    protected void updateTime(int hours, int minutes) {
         this.timeText.setText(getTimeToString(hours, minutes));
     }
 
-    private void setResetButton() {
+    protected void setResetButton() {
         this.resetButton = (Button) this.findViewById(R.id.resetButton);
         this.resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +61,19 @@ public abstract class SleepActivity extends AppCompatActivity {
         });
     }
 
-    private String getTimeToString(int hr, int min) {
+    protected String getTimeToString(int hr, int min) {
         String period;
         if (hr > 12) {
             hr -= 12;
             period = "PM";
+        } else if (hr == 12) {
+            period = "PM";
+        } else if (hr == 0) {
+            hr = 12;
+            period = "AM";
         } else {
             period = "AM";
+
         }
 
         StringBuffer result = new StringBuffer(getTimeOfValue(hr) + ":" + getTimeOfValue(min) + " " + period);

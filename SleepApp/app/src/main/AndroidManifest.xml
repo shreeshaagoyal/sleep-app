@@ -19,7 +19,6 @@
         <activity android:name=".WakeUpActivity" />
         <activity android:name=".FallAsleepActivity" />
         <activity android:name=".SleepActivity" />
-        <activity android:name=".SetTimeActivity"></activity>
     </application>
 
 </manifest>
