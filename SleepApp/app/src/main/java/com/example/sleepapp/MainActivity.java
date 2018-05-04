@@ -10,6 +10,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Button wakeUpButton;
     private Button fallAsleepButton;
+    private int wakeUpHr;
+    private int wakeUpMin;
+    private int fallAsleepHr;
+    private int fallAsleepMin;
+    private int fallAsleepDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +53,45 @@ public class MainActivity extends AppCompatActivity {
     private void startFallAsleepActivity() {
         Intent intent = new Intent(this, FallAsleepActivity.class);
         startActivity(intent);
+    }
+
+    public void setWakeUpHr(int hour) {
+        this.wakeUpHr = hour;
+    }
+
+    public void setWakeUpMin(int minute) {
+        this.wakeUpMin = minute;
+    }
+
+    public void setFallAsleepHr(int hour) {
+        this.fallAsleepHr = hour;
+    }
+
+    public void setFallAsleepMin(int minute) {
+        this.fallAsleepMin = minute;
+    }
+
+    public void setFallAsleepDuration(int time) {
+        this.fallAsleepDuration = time;
+    }
+
+    public int getWakeUpHr() {
+        return this.wakeUpHr;
+    }
+
+    public int getWakeUpMin() {
+        return this.wakeUpMin;
+    }
+
+    public int getFallAsleepHr() {
+        return this.fallAsleepHr;
+    }
+
+    public int getFallAsleepMin() {
+        return this.fallAsleepMin;
+    }
+
+    public int getFallAsleepDuration() {
+        return this.fallAsleepDuration;
     }
 }

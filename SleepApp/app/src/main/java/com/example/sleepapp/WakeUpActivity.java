@@ -1,7 +1,6 @@
 package com.example.sleepapp;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class WakeUpActivity extends SleepActivity {

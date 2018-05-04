@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
