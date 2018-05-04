@@ -1,5 +1,7 @@
 package com.example.sleepapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,11 +21,22 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         setContentView(R.layout.activity_fall_asleep);
         setSetTimeButton();
         setResetButton();
+        initializeTimeText();
+        setSetTimeSpinner();
+
+        Intent intent = new Intent();
+        intent.putExtra("fall_asleep_hr", hr);
+        intent.putExtra("fall_asleep_min", min);
+        intent.putExtra("fall_asleep_duration", this.duration);
+        setResult(Activity.RESULT_OK, intent);
+        //finish();
+    }
+
+    private void initializeTimeText() {
         timeText = (TextView) findViewById(R.id.timeText);
         hr = 0;
         min = 0;
         updateTime(hr, min);
-        setSetTimeSpinner();
     }
 
     private void setSetTimeSpinner() {

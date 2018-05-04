@@ -5,8 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final int WAKE_UP_ACTIVITY = 0;
+    private final int FALL_ASLEEP_ACTIVITY = 1;
 
     private Button wakeUpButton;
     private Button fallAsleepButton;
@@ -15,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private int fallAsleepHr;
     private int fallAsleepMin;
     private int fallAsleepDuration;
+
+    private TextView text; // TODO: DELETE THIS VARIABLE
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,51 +53,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void startWakeUpActivity() {
         Intent intent = new Intent(this, WakeUpActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, WAKE_UP_ACTIVITY);
     }
 
     private void startFallAsleepActivity() {
         Intent intent = new Intent(this, FallAsleepActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, FALL_ASLEEP_ACTIVITY);
     }
 
-    public void setWakeUpHr(int hour) {
-        this.wakeUpHr = hour;
-    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WAKE_UP_ACTIVITY) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
 
-    public void setWakeUpMin(int minute) {
-        this.wakeUpMin = minute;
-    }
-
-    public void setFallAsleepHr(int hour) {
-        this.fallAsleepHr = hour;
-    }
-
-    public void setFallAsleepMin(int minute) {
-        this.fallAsleepMin = minute;
-    }
-
-    public void setFallAsleepDuration(int time) {
-        this.fallAsleepDuration = time;
-    }
-
-    public int getWakeUpHr() {
-        return this.wakeUpHr;
-    }
-
-    public int getWakeUpMin() {
-        return this.wakeUpMin;
-    }
-
-    public int getFallAsleepHr() {
-        return this.fallAsleepHr;
-    }
-
-    public int getFallAsleepMin() {
-        return this.fallAsleepMin;
-    }
-
-    public int getFallAsleepDuration() {
-        return this.fallAsleepDuration;
+            }
+        } else if (requestCode == FALL_ASLEEP_ACTIVITY) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
+                this.fallAsleepHr = data.getIntExtra("fall_asleep_hr", 0);
+                this.fallAsleepMin = data.getIntExtra("fall_asleep_min", 0);
+                this.fallAsleepDuration = data.getIntExtra("fall_asleep_duration", 0);
+                this.text.setText(this.fallAsleepHr + ":" + this.fallAsleepMin + " " + this.fallAsleepDuration);
+            }
+        }
     }
 }
