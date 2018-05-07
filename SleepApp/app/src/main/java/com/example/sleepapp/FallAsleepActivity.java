@@ -23,13 +23,6 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         setResetButton();
         initializeTimeText();
         setSetTimeSpinner();
-
-        Intent intent = new Intent();
-        intent.putExtra("fall_asleep_hr", hr);
-        intent.putExtra("fall_asleep_min", min);
-        intent.putExtra("fall_asleep_duration", this.duration);
-        setResult(Activity.RESULT_OK, intent);
-        //finish();
     }
 
     private void initializeTimeText() {
@@ -70,6 +63,10 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
                 this.duration = 30;
                 break;
         }
+        Intent intent = new Intent();
+        intent.putExtra("fall_asleep_duration", this.duration);
+        setResult(Activity.RESULT_OK, intent);
+        //finish();
     }
 
     @Override
