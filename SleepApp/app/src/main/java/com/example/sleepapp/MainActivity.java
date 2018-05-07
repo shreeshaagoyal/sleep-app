@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == WAKE_UP_ACTIVITY) {
             if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (requestCode == FALL_ASLEEP_ACTIVITY) {
             if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
-                this.fallAsleepHr = data.getIntExtra("fall_asleep_hr", 0);
-                this.fallAsleepMin = data.getIntExtra("fall_asleep_min", 0);
-                this.fallAsleepDuration = data.getIntExtra("fall_asleep_duration", 0);
+                this.fallAsleepHr = data.getIntExtra("fall_asleep_hr", FALL_ASLEEP_ACTIVITY);
+                this.fallAsleepMin = data.getIntExtra("fall_asleep_min", FALL_ASLEEP_ACTIVITY);
+                this.fallAsleepDuration = data.getIntExtra("fall_asleep_duration", FALL_ASLEEP_ACTIVITY);
                 this.text.setText(this.fallAsleepHr + ":" + this.fallAsleepMin + " " + this.fallAsleepDuration);
             }
         }
