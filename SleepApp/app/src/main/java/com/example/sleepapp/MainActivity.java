@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(com.example.sleepapp.R.layout.activity_main);
+        this.text = (TextView) findViewById(com.example.sleepapp.R.id.text);
+        this.fallAsleepDuration = 5;
         setWakeUpButton();
         setFallAsleepButton();
     }
@@ -63,18 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == WAKE_UP_ACTIVITY) {
-            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
-
-            }
-        } else if (requestCode == FALL_ASLEEP_ACTIVITY) {
-            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
-                this.fallAsleepHr = data.getIntExtra("fall_asleep_hr", FALL_ASLEEP_ACTIVITY);
-                this.fallAsleepMin = data.getIntExtra("fall_asleep_min", FALL_ASLEEP_ACTIVITY);
-                this.fallAsleepDuration = data.getIntExtra("fall_asleep_duration", FALL_ASLEEP_ACTIVITY);
-                this.text.setText(this.fallAsleepHr + ":" + this.fallAsleepMin + " " + this.fallAsleepDuration);
-            }
+//        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == FALL_ASLEEP_ACTIVITY) && (resultCode == RESULT_OK)) {
+            this.fallAsleepDuration = data.getIntExtra("fall_asleep_duration", FALL_ASLEEP_ACTIVITY);
+            this.text.setText("fall_asleep_duration: " + this.fallAsleepDuration);
         }
     }
 }

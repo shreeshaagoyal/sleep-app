@@ -1,19 +1,22 @@
 package com.example.sleepapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner setTimeSpinner;
-    private int duration;
+    private int duration = 5;
+
+    private TextView tempText; // TODO: DELETE THIS VARIABLE
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,10 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         setResetButton();
         initializeTimeText();
         setSetTimeSpinner();
+
+        this.tempText = (TextView) findViewById(R.id.tempText);
+        this.tempText.setText("tempText");
+        Toast.makeText(this, "FallAsleepActivity", Toast.LENGTH_SHORT).show();
     }
 
     private void initializeTimeText() {
@@ -39,6 +46,7 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
                 getResources().getStringArray(R.array.times));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.setTimeSpinner.setAdapter(adapter);
+        this.setTimeSpinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -63,14 +71,20 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
                 this.duration = 30;
                 break;
         }
-        Intent intent = new Intent();
-        intent.putExtra("fall_asleep_duration", this.duration);
-        setResult(Activity.RESULT_OK, intent);
-        //finish();
+        this.tempText.setText("duration: " + this.duration);
+        Toast.makeText(this, "duration: " + this.duration, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // No implementation needed
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("fall_asleep_duration", this.duration);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
