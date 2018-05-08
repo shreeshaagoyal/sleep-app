@@ -13,23 +13,22 @@ import android.widget.Toast;
 
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner setTimeSpinner;
-    private int duration = 5;
+    private static final String FALL_ASLEEP_DURATION = "fall_asleep_duration";
 
-    private TextView tempText; // TODO: DELETE THIS VARIABLE
+    private Spinner setTimeSpinner;
+    private int duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fall_asleep);
+
+        this.duration = getIntent().getIntExtra(FALL_ASLEEP_DURATION, 0);
+
         setSetTimeButton();
         setResetButton();
         initializeTimeText();
         setSetTimeSpinner();
-
-        this.tempText = (TextView) findViewById(R.id.tempText);
-        this.tempText.setText("tempText");
-        Toast.makeText(this, "FallAsleepActivity", Toast.LENGTH_SHORT).show();
     }
 
     private void initializeTimeText() {
@@ -46,6 +45,7 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
                 getResources().getStringArray(R.array.times));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.setTimeSpinner.setAdapter(adapter);
+        this.setTimeSpinner.setSelection((this.duration/5 )-1);
         this.setTimeSpinner.setOnItemSelectedListener(this);
     }
 
@@ -71,8 +71,6 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
                 this.duration = 30;
                 break;
         }
-        this.tempText.setText("duration: " + this.duration);
-        Toast.makeText(this, "duration: " + this.duration, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -83,7 +81,7 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("fall_asleep_duration", this.duration);
+        intent.putExtra(FALL_ASLEEP_DURATION, this.duration);
         setResult(RESULT_OK, intent);
         finish();
     }

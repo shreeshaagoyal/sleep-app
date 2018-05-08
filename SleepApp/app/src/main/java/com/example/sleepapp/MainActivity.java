@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startFallAsleepActivity() {
         Intent intent = new Intent(this, FallAsleepActivity.class);
+        intent.putExtra("fall_asleep_duration", this.fallAsleepDuration);
         startActivityForResult(intent, FALL_ASLEEP_ACTIVITY);
     }
 
