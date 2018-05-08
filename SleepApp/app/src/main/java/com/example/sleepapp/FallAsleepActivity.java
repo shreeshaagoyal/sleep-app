@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
@@ -26,11 +25,10 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fall_asleep);
 
-        tempText = (TextView) findViewById(R.id.tempText); // TODO: DELETE
-
-        this.duration = getIntent().getIntExtra(FALL_ASLEEP_DURATION, 0);
         this.fallAsleepHr = getIntent().getIntExtra(FALL_ASLEEP_HR, 0);
         this.fallAsleepMin = getIntent().getIntExtra(FALL_ASLEEP_MIN, 0);
+        this.duration = getIntent().getIntExtra(FALL_ASLEEP_DURATION, 0);
+
         hr = this.fallAsleepHr;
         min = this.fallAsleepMin;
 
@@ -38,15 +36,12 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         setResetButton();
         initializeTimeText();
         setSetTimeSpinner();
-
-        // TODO: DELETE THIS
-        this.tempText.setText("fall_asleep_hr: " + this.fallAsleepHr + "\n" + "fall_asleep_min: " + this.fallAsleepMin);
     }
 
+    // TODO: MOVE THIS METHOD TO SleepActivity
     private void initializeTimeText() {
         timeText = (TextView) findViewById(R.id.timeText);
         hr = this.fallAsleepHr;
-        Toast.makeText(this, "fall_asleep_hr: " + this.fallAsleepHr, Toast.LENGTH_SHORT);
         min = this.fallAsleepMin;
         updateTime(hr, min);
     }
@@ -97,9 +92,9 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         this.fallAsleepMin = getMin();
 
         Intent intent = new Intent();
-        intent.putExtra(FALL_ASLEEP_DURATION, this.duration);
         intent.putExtra(FALL_ASLEEP_HR, this.fallAsleepHr);
         intent.putExtra(FALL_ASLEEP_MIN, this.fallAsleepMin);
+        intent.putExtra(FALL_ASLEEP_DURATION, this.duration);
         setResult(RESULT_OK, intent);
         finish();
     }
