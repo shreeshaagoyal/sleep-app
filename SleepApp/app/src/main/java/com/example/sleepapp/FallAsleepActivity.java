@@ -34,16 +34,8 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
 
         setSetTimeButton();
         setResetButton();
-        initializeTimeText();
+        initializeTimeText(this.fallAsleepHr, this.fallAsleepMin);
         setSetTimeSpinner();
-    }
-
-    // TODO: MOVE THIS METHOD TO SleepActivity
-    private void initializeTimeText() {
-        timeText = (TextView) findViewById(R.id.timeText);
-        hr = this.fallAsleepHr;
-        min = this.fallAsleepMin;
-        updateTime(hr, min);
     }
 
     private void setSetTimeSpinner() {

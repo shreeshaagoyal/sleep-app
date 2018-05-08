@@ -23,14 +23,7 @@ public class WakeUpActivity extends SleepActivity {
 
         setSetTimeButton();
         setResetButton();
-        initializeTimeText();
-    }
-
-    private void initializeTimeText() {
-        timeText = (TextView) findViewById(R.id.timeText);
-        hr = this.wakeUpHr;
-        min = this.wakeUpMin;
-        updateTime(hr, min);
+        initializeTimeText(this.wakeUpHr, this.wakeUpMin);
     }
 
     @Override

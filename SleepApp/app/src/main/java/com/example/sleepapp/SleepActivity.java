@@ -80,6 +80,13 @@ public abstract class SleepActivity extends AppCompatActivity {
         return result.toString();
     }
 
+    protected void initializeTimeText(int hours, int minutes) {
+        timeText = (TextView) findViewById(R.id.timeText);
+        hr = hours;
+        min = minutes;
+        updateTime(hr, min);
+    }
+
     protected int getHr() {
         return this.hr;
     }
