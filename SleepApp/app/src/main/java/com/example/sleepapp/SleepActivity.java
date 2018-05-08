@@ -17,6 +17,8 @@ public abstract class SleepActivity extends AppCompatActivity {
     protected int min;
     protected TextView timeText;
 
+    protected TextView tempText; // TODO: DELETE
+
     protected void setSetTimeButton() {
         this.setTimeButton = (Button) this.findViewById(R.id.setTimeButton);
         this.setTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +48,10 @@ public abstract class SleepActivity extends AppCompatActivity {
 
     protected void updateTime(int hours, int minutes) {
         this.timeText.setText(getTimeToString(hours, minutes));
+        hr = hours;
+        min = minutes;
+        this.tempText.setText("fall_asleep_hr: " + this.hr + "\n" + "fall_asleep_min: " + this.min);
+        //this.tempText.setText("fall_asleep_hr: " + hours + "\n" + "fall_asleep_min: " + minutes);
     }
 
     protected void setResetButton() {
@@ -55,7 +61,7 @@ public abstract class SleepActivity extends AppCompatActivity {
             public void onClick(View view) {
                 hr = 0;
                 min = 0;
-                timeText.setText(getTimeToString(hr, min));
+                updateTime(hr, min);
             }
         });
     }
@@ -77,5 +83,13 @@ public abstract class SleepActivity extends AppCompatActivity {
 
         StringBuffer result = new StringBuffer(getTimeOfValue(hr) + ":" + getTimeOfValue(min) + " " + period);
         return result.toString();
+    }
+
+    protected int getHr() {
+        return this.hr;
+    }
+
+    protected int getMin() {
+        return this.min;
     }
 }

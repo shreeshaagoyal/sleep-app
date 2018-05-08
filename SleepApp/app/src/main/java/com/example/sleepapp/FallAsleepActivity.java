@@ -2,7 +2,6 @@ package com.example.sleepapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,27 +13,41 @@ import android.widget.Toast;
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String FALL_ASLEEP_DURATION = "fall_asleep_duration";
+    private static final String FALL_ASLEEP_HR = "fall_asleep_hr";
+    private static final String FALL_ASLEEP_MIN = "fall_asleep_min";
 
     private Spinner setTimeSpinner;
     private int duration;
+    private int fallAsleepHr;
+    private int fallAsleepMin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fall_asleep);
 
+        tempText = (TextView) findViewById(R.id.tempText); // TODO: DELETE
+
         this.duration = getIntent().getIntExtra(FALL_ASLEEP_DURATION, 0);
+        this.fallAsleepHr = getIntent().getIntExtra(FALL_ASLEEP_HR, 0);
+        this.fallAsleepMin = getIntent().getIntExtra(FALL_ASLEEP_MIN, 0);
+        hr = this.fallAsleepHr;
+        min = this.fallAsleepMin;
 
         setSetTimeButton();
         setResetButton();
         initializeTimeText();
         setSetTimeSpinner();
+
+        // TODO: DELETE THIS
+        this.tempText.setText("fall_asleep_hr: " + this.fallAsleepHr + "\n" + "fall_asleep_min: " + this.fallAsleepMin);
     }
 
     private void initializeTimeText() {
         timeText = (TextView) findViewById(R.id.timeText);
-        hr = 0;
-        min = 0;
+        hr = this.fallAsleepHr;
+        Toast.makeText(this, "fall_asleep_hr: " + this.fallAsleepHr, Toast.LENGTH_SHORT);
+        min = this.fallAsleepMin;
         updateTime(hr, min);
     }
 
@@ -80,8 +93,13 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
 
     @Override
     public void onBackPressed() {
+        this.fallAsleepHr = getHr();
+        this.fallAsleepMin = getMin();
+
         Intent intent = new Intent();
         intent.putExtra(FALL_ASLEEP_DURATION, this.duration);
+        intent.putExtra(FALL_ASLEEP_HR, this.fallAsleepHr);
+        intent.putExtra(FALL_ASLEEP_MIN, this.fallAsleepMin);
         setResult(RESULT_OK, intent);
         finish();
     }
