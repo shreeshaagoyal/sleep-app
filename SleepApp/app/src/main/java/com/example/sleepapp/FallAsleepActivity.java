@@ -11,14 +11,14 @@ import android.widget.TextView;
 
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
 
-    private static final String FALL_ASLEEP_DURATION = "fall_asleep_duration";
     private static final String FALL_ASLEEP_HR = "fall_asleep_hr";
     private static final String FALL_ASLEEP_MIN = "fall_asleep_min";
+    private static final String FALL_ASLEEP_DURATION = "fall_asleep_duration";
 
     private Spinner setTimeSpinner;
-    private int duration;
     private int fallAsleepHr;
     private int fallAsleepMin;
+    private int duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
