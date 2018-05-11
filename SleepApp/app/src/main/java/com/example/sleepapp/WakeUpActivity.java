@@ -35,6 +35,9 @@ public class WakeUpActivity extends SleepActivity {
         intent.putExtra(WAKE_UP_HR, this.wakeUpHr);
         intent.putExtra(WAKE_UP_MIN, this.wakeUpMin);
         setResult(RESULT_OK, intent);
+
+        // TODO: SET PENDING INTENT AND wakeUpCalendar
+
         finish();
     }
 }

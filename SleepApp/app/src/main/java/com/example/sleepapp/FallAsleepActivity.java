@@ -2,6 +2,7 @@ package com.example.sleepapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -54,21 +55,27 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         switch (pos) {
             case 0:
                 this.duration = 5;
+                //Log.i("", "Hola");
                 break;
             case 1:
                 this.duration = 10;
+                //Log.wtf("", "Bonjour");
                 break;
             case 2:
                 this.duration = 15;
+                //Log.wtf("", "Namastey");
                 break;
             case 3:
                 this.duration = 20;
+                Log.wtf("j", "Hello");
                 break;
             case 4:
                 this.duration = 25;
+                Log.wtf("j", "Merry XMAS");
                 break;
             case 5:
                 this.duration = 30;
+                Log.wtf("j", "BRO pls");
                 break;
         }
     }
@@ -88,6 +95,9 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         intent.putExtra(FALL_ASLEEP_MIN, this.fallAsleepMin);
         intent.putExtra(FALL_ASLEEP_DURATION, this.duration);
         setResult(RESULT_OK, intent);
+
+        Log.wtf("", "brobrobrobrobro");
+
         finish();
     }
 }

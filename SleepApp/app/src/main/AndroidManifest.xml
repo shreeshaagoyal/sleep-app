@@ -21,4 +21,6 @@
         <activity android:name=".SleepActivity" />
     </application>
 
+    <receiver android:name=".ScheduledReceiver" />
+
 </manifest>
