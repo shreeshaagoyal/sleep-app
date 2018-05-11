@@ -13,9 +13,20 @@ public abstract class SleepActivity extends AppCompatActivity {
 
     protected Button setTimeButton;
     protected Button resetButton;
+    protected Button okButton;
     protected int hr;
     protected int min;
     protected TextView timeText;
+
+    protected void setOkButton() {
+        this.okButton = (Button) this.findViewById(R.id.ok);
+        this.okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
 
     protected void setSetTimeButton() {
         this.setTimeButton = (Button) this.findViewById(R.id.setTimeButton);

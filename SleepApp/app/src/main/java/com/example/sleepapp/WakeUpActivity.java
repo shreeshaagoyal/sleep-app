@@ -21,6 +21,7 @@ public class WakeUpActivity extends SleepActivity {
         this.wakeUpHr = getIntent().getIntExtra(WAKE_UP_HR, 0);
         this.wakeUpMin = getIntent().getIntExtra(WAKE_UP_MIN, 0);
 
+        setOkButton();
         setSetTimeButton();
         setResetButton();
         initializeTimeText(this.wakeUpHr, this.wakeUpMin);
