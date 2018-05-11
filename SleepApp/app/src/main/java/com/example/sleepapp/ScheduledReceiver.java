@@ -37,8 +37,8 @@ public class ScheduledReceiver extends BroadcastReceiver {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setWakeUpMusic(Context context, int wakeUpHr, int wakeUpMin) {
-        this.wakeUpCalendar.set(Calendar.HOUR_OF_DAY, wakeUpHr);
-        this.wakeUpCalendar.set(Calendar.MINUTE, wakeUpMin);
+        //this.wakeUpCalendar.set(Calendar.HOUR_OF_DAY, wakeUpHr);
+        //this.wakeUpCalendar.set(Calendar.MINUTE, wakeUpMin);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ScheduledReceiver.class);

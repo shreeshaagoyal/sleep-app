@@ -35,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ScheduledReceiver alarmReceiver;
 
-    private Context context = this.getApplicationContext();
+    private Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.context = this.getApplicationContext();
         super.onCreate(savedInstanceState);
         this.setContentView(com.example.sleepapp.R.layout.activity_main);
         this.fallAsleepDuration = 5;
@@ -47,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setFallAsleepButton();
 
         this.alarmReceiver = new ScheduledReceiver();
-
-        this.wakeUpCalendar = Calendar.getInstance();
-        this.fallAsleepCalendar = Calendar.getInstance();
     }
 
     /** PRIVATE METHODS */
@@ -106,11 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setWakeUpMusic() {
-        this.wakeUpCalendar.set(Calendar.HOUR_OF_DAY, this.wakeUpHr);
-        this.wakeUpCalendar.set(Calendar.MINUTE, this.wakeUpMin);
-        this.pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, intent, 0);
-        this.alarmManager.set(AlarmManager.RTC_WAKEUP, this.wakeUpCalendar.getTimeInMillis(), pendingIntent);
-
         Intent intent = new Intent(this, ScheduledReceiver.class); // TODO: different than the tutorial
 
         if (this.alarmReceiver != null) {
