@@ -6,9 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
-import android.os.Build;
-import android.os.PowerManager;
-import android.support.annotation.RequiresApi;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,28 +18,21 @@ import android.widget.Toast;
 
 public class ScheduledReceiver extends BroadcastReceiver {
 
-    private Calendar wakeUpCalendar;
-    private Calendar fallAsleepCalendar;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.wakeUpCalendar = Calendar.getInstance();
-        this.fallAsleepCalendar = Calendar.getInstance();
-
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TAG");
-        wl.acquire();
+        Toast.makeText(context, "ALARM!!!!!!!!!!!!!!!!!!", Toast.LENGTH_LONG).show();
         Log.wtf("ScheduledReceiver", "In the ScheduledReceiver class! :D");
-        Toast.makeText(context, "Hello buddies, we are in the ScheduledReceiver class", Toast.LENGTH_SHORT).show();
-        wl.release();
+        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null)
+        {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
+        ringtone.play();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setWakeUpMusic(Context context, int wakeUpHr, int wakeUpMin) {
-        //this.wakeUpCalendar.set(Calendar.HOUR_OF_DAY, wakeUpHr);
-        //this.wakeUpCalendar.set(Calendar.MINUTE, wakeUpMin);
-
+    public void setWakeUpMusic(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ScheduledReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
