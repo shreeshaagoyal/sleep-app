@@ -14,12 +14,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int WAKE_UP_ACTIVITY = 0;
     private static final int FALL_ASLEEP_ACTIVITY = 1;
 
-    private static final String WAKE_UP_HR = "wake_up_hr";
-    private static final String WAKE_UP_MIN = "wake_up_min";
-    private static final String FALL_ASLEEP_HR = "fall_asleep_hr";
-    private static final String FALL_ASLEEP_MIN = "fall_asleep_min";
-    private static final String FALL_ASLEEP_DURATION = "fall_asleep_duration";
-
     private Button wakeUpButton;
     private Button fallAsleepButton;
     private int wakeUpHr;
@@ -63,16 +57,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void startWakeUpActivity() {
         Intent intent = new Intent(this, WakeUpActivity.class);
-        intent.putExtra(WAKE_UP_HR, this.wakeUpHr);
-        intent.putExtra(WAKE_UP_MIN, this.wakeUpMin);
+        intent.putExtra(Strings.WAKE_UP_HR, this.wakeUpHr);
+        intent.putExtra(Strings.WAKE_UP_MIN, this.wakeUpMin);
         startActivityForResult(intent, WAKE_UP_ACTIVITY);
     }
 
     private void startFallAsleepActivity() {
         Intent intent = new Intent(this, FallAsleepActivity.class);
-        intent.putExtra(FALL_ASLEEP_DURATION, this.fallAsleepDuration);
-        intent.putExtra(FALL_ASLEEP_HR, this.fallAsleepHr);
-        intent.putExtra(FALL_ASLEEP_MIN, this.fallAsleepMin);
+        intent.putExtra(Strings.FALL_ASLEEP_HR, this.fallAsleepHr);
+        intent.putExtra(Strings.FALL_ASLEEP_MIN, this.fallAsleepMin);
+        intent.putExtra(Strings.FALL_ASLEEP_DURATION, this.fallAsleepDuration);
         startActivityForResult(intent, FALL_ASLEEP_ACTIVITY);
     }
 
@@ -80,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == WAKE_UP_ACTIVITY) && (resultCode == RESULT_OK)) {
-            this.wakeUpHr = data.getIntExtra(WAKE_UP_HR, WAKE_UP_ACTIVITY);
-            this.wakeUpMin = data.getIntExtra(WAKE_UP_MIN, WAKE_UP_ACTIVITY);
-            Log.wtf("j", "wake_up_hr: " + this.wakeUpHr);
-            Log.wtf("j", "wake_up_min: " + this.wakeUpMin);
+            this.wakeUpHr = data.getIntExtra(Strings.WAKE_UP_HR, WAKE_UP_ACTIVITY);
+            this.wakeUpMin = data.getIntExtra(Strings.WAKE_UP_MIN, WAKE_UP_ACTIVITY);
+            Log.wtf(Strings.MAIN, "wake_up_hr: " + this.wakeUpHr);
+            Log.wtf(Strings.MAIN, "wake_up_min: " + this.wakeUpMin);
         } else if ((requestCode == FALL_ASLEEP_ACTIVITY) && (resultCode == RESULT_OK)) {
-            this.fallAsleepDuration = data.getIntExtra(FALL_ASLEEP_DURATION, FALL_ASLEEP_ACTIVITY);
-            this.fallAsleepHr = data.getIntExtra(FALL_ASLEEP_HR, FALL_ASLEEP_ACTIVITY);
-            this.fallAsleepMin = data.getIntExtra(FALL_ASLEEP_MIN, FALL_ASLEEP_ACTIVITY);
+            this.fallAsleepHr = data.getIntExtra(Strings.FALL_ASLEEP_HR, FALL_ASLEEP_ACTIVITY);
+            this.fallAsleepMin = data.getIntExtra(Strings.FALL_ASLEEP_MIN, FALL_ASLEEP_ACTIVITY);
+            this.fallAsleepDuration = data.getIntExtra(Strings.FALL_ASLEEP_DURATION, FALL_ASLEEP_ACTIVITY);
         }
     }
 }

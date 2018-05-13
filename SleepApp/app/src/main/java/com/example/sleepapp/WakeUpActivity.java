@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 public class WakeUpActivity extends SleepActivity {
 
-    private static final String WAKE_UP_HR = "wake_up_hr";
-    private static final String WAKE_UP_MIN = "wake_up_min";
-
     private int wakeUpHr;
     private int wakeUpMin;
 
@@ -31,8 +28,8 @@ public class WakeUpActivity extends SleepActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wake_up);
 
-        this.wakeUpHr = getIntent().getIntExtra(WAKE_UP_HR, 0);
-        this.wakeUpMin = getIntent().getIntExtra(WAKE_UP_MIN, 0);
+        this.wakeUpHr = getIntent().getIntExtra(Strings.WAKE_UP_HR, 0);
+        this.wakeUpMin = getIntent().getIntExtra(Strings.WAKE_UP_MIN, 0);
 
         this.alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -48,11 +45,9 @@ public class WakeUpActivity extends SleepActivity {
         this.wakeUpMin = getMin();
 
         Intent intent = new Intent();
-        intent.putExtra(WAKE_UP_HR, this.wakeUpHr);
-        intent.putExtra(WAKE_UP_MIN, this.wakeUpMin);
+        intent.putExtra(Strings.WAKE_UP_HR, this.wakeUpHr);
+        intent.putExtra(Strings.WAKE_UP_MIN, this.wakeUpMin);
         setResult(RESULT_OK, intent);
-
-        // TODO: SET PENDING INTENT AND wakeUpCalendar
 
         finish();
     }
@@ -73,16 +68,16 @@ public class WakeUpActivity extends SleepActivity {
         this.wakeUpHr = getHr();
         this.wakeUpMin = getMin();
         Toast.makeText(this.getApplicationContext(), "ALARM ON", Toast.LENGTH_SHORT).show();
-        Log.wtf("TAG", "ALARM ON");
+        Log.wtf(Strings.WAKE_UP, "ALARM ON");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, this.wakeUpHr);
         calendar.set(Calendar.MINUTE, this.wakeUpMin);
 
         Toast.makeText(this.getApplicationContext(), "wake_up_hr: " + wakeUpHr + "\n" + "wake_up_min: " + wakeUpMin, Toast.LENGTH_LONG).show();
-        Log.wtf("TAG", "wake_up_hr: " + wakeUpHr + "\n" + "wake_up_min: " + wakeUpMin);
+        Log.wtf(Strings.WAKE_UP, "wake_up_hr: " + wakeUpHr + "\n" + "wake_up_min: " + wakeUpMin);
 
-        Intent intent = new Intent(this, ScheduledReceiver.class);
+        Intent intent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10000, pendingIntent);
     }

@@ -16,13 +16,13 @@ import android.widget.Toast;
  * Created by shreeshaagoyal on 5/8/2018.
  */
 
-public class ScheduledReceiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver {
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "ALARM!!!!!!!!!!!!!!!!!!", Toast.LENGTH_LONG).show();
-        Log.wtf("ScheduledReceiver", "In the ScheduledReceiver class! :D");
+        Toast.makeText(context, "ALARM!", Toast.LENGTH_LONG).show();
+        Log.wtf(Strings.RECEIVER, "In the ScheduledReceiver class! :D");
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null)
         {
@@ -34,7 +34,7 @@ public class ScheduledReceiver extends BroadcastReceiver {
 
     public void setWakeUpMusic(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, ScheduledReceiver.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
     }

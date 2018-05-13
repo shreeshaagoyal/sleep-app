@@ -20,7 +20,7 @@
         <activity android:name=".FallAsleepActivity" />
     </application>
 
-    <receiver android:name=".ScheduledReceiver">
+    <receiver android:name=".AlarmReceiver">
     </receiver>
 
 </manifest>
