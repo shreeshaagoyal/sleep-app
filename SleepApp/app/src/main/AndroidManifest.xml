@@ -16,11 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".AlarmReceiver" />
+
         <activity android:name=".WakeUpActivity" />
         <activity android:name=".FallAsleepActivity" />
     </application>
-
-    <receiver android:name=".AlarmReceiver">
-    </receiver>
 
 </manifest>
