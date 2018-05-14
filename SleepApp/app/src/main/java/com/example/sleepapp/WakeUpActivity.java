@@ -10,7 +10,6 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class WakeUpActivity extends SleepActivity {
@@ -40,6 +39,18 @@ public class WakeUpActivity extends SleepActivity {
     }
 
     @Override
+    protected void setOkButton() {
+        this.okButton = (Button) this.findViewById(R.id.ok);
+        this.okButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                onOkClicked();
+            }
+        });
+    }
+
+    @Override
     public void onBackPressed() {
         this.wakeUpHr = getHr();
         this.wakeUpMin = getMin();
@@ -52,33 +63,26 @@ public class WakeUpActivity extends SleepActivity {
         finish();
     }
 
-    protected void setOkButton() {
-        this.okButton = (Button) this.findViewById(R.id.ok);
-        this.okButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                onClickOkButton();
-            }
-        });
-    }
+    protected void onOkClicked() {
+        updateTime();
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void onClickOkButton() {
-        this.wakeUpHr = getHr();
-        this.wakeUpMin = getMin();
-        Toast.makeText(this.getApplicationContext(), "ALARM ON", Toast.LENGTH_SHORT).show();
         Log.wtf(Strings.WAKE_UP, "ALARM ON");
+        Toast.makeText(WakeUpActivity.this, "ALARM ON", Toast.LENGTH_SHORT).show();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, this.wakeUpHr);
-        calendar.set(Calendar.MINUTE, this.wakeUpMin);
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, this.wakeUpHr);
+        calendar.set(java.util.Calendar.MINUTE, this.wakeUpMin);
 
-        Toast.makeText(this.getApplicationContext(), "wake_up_hr: " + wakeUpHr + "\n" + "wake_up_min: " + wakeUpMin, Toast.LENGTH_LONG).show();
-        Log.wtf(Strings.WAKE_UP, "wake_up_hr: " + wakeUpHr + "\n" + "wake_up_min: " + wakeUpMin);
+        Log.wtf("TAG", "hour: " + this.wakeUpHr + "\t" + "min: " + this.wakeUpMin);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10000, pendingIntent);
+    }
+
+    /** PRIVATE METHOD(S) */
+    private void updateTime() {
+        this.wakeUpHr = getHr();
+        this.wakeUpMin = getMin();
     }
 }
