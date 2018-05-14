@@ -1,31 +1,64 @@
 package com.example.sleepapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 public abstract class SleepActivity extends AppCompatActivity {
 
     protected Button setTimeButton;
-    protected Button resetButton;
+    protected Button cancelButton;
     protected Button okButton;
+
     protected int hr;
     protected int min;
+
     protected TextView timeText;
 
-    protected void setOkButton() {
+    protected PendingIntent pendingIntent;
+    protected AlarmManager alarmManager;
+
+    protected void setOkButton(final int hour, final int minute) {
         this.okButton = (Button) this.findViewById(R.id.ok);
         this.okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                onOkClicked(hour, minute);
             }
         });
+    }
+
+    private void onOkClicked(int hour, int minute) {
+        updateTime();
+        this.alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Log.wtf(Strings.WAKE_UP, "ALARM ON");
+        Toast.makeText(this, "ALARM ON", Toast.LENGTH_SHORT).show();
+
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, hour);
+        calendar.set(java.util.Calendar.MINUTE, minute);
+
+        Log.wtf("TAG", "hour: " + hour + "\t" + "min: " + minute);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        this.pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        this.alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10000, pendingIntent);
+    }
+
+    private void updateTime() {
+        this.hr = this.getHr();
+        this.min = this.getMin();
     }
 
     protected void setSetTimeButton() {
@@ -61,9 +94,9 @@ public abstract class SleepActivity extends AppCompatActivity {
         min = minutes;
     }
 
-    protected void setResetButton() {
-        this.resetButton = (Button) this.findViewById(R.id.resetButton);
-        this.resetButton.setOnClickListener(new View.OnClickListener() {
+    protected void setCancelButton() {
+        this.cancelButton = (Button) this.findViewById(R.id.cancelButton);
+        this.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hr = 0;
