@@ -11,4 +11,5 @@ public class Strings {
     public static final String WAKE_UP = "WakeUpActivity";
     public static final String FALL_ASLEEP = "FallAsleepActivity";
     public static final String RECEIVER = "AlarmReceiver";
+    public static final String SLEEP = "SleepActivity";
 }

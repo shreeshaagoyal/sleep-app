@@ -52,28 +52,10 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        switch (pos) {
-            case 0:
-                this.duration = 5;
-                break;
-            case 1:
-                this.duration = 10;
-                break;
-            case 2:
-                this.duration = 15;
-                break;
-            case 3:
-                this.duration = 20;
-                break;
-            case 4:
-                this.duration = 25;
-                break;
-            case 5:
-                this.duration = 30;
-                break;
-        }
+        this.duration = TimeUtilTools.getDurationFromPos(pos);
     }
 
+    // TODO: SEE IF THIS METHOD IS NEEDED
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // No implementation needed
@@ -90,8 +72,6 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         intent.putExtra(Strings.FALL_ASLEEP_DURATION, this.duration);
         setResult(RESULT_OK, intent);
 
-        Log.wtf(Strings.FALL_ASLEEP, "exiting FallAsleepActivity");
-
         finish();
     }
 
@@ -102,8 +82,10 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
 
             @Override
             public void onClick(View view) {
-                alarmManager.cancel(pendingIntent);
-                Log.wtf("TAG", "ALARM OFF");
+                if (alarmManager != null) {
+                    alarmManager.cancel(pendingIntent);
+                }
+                Log.wtf(Strings.FALL_ASLEEP, "ALARM OFF");
                 Toast.makeText(FallAsleepActivity.this, "ALARM OFF", Toast.LENGTH_SHORT).show();
             }
         });

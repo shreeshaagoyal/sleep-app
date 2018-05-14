@@ -38,29 +38,6 @@ public abstract class SleepActivity extends AppCompatActivity {
         });
     }
 
-    private void onOkClicked(int hour, int minute) {
-        updateTime();
-        this.alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        Log.wtf(Strings.WAKE_UP, "ALARM ON");
-        Toast.makeText(this, "ALARM ON", Toast.LENGTH_SHORT).show();
-
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, hour);
-        calendar.set(java.util.Calendar.MINUTE, minute);
-
-        Log.wtf("TAG", "hour: " + hour + "\t" + "min: " + minute);
-
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        this.pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        this.alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10000, pendingIntent);
-    }
-
-    private void updateTime() {
-        this.hr = this.getHr();
-        this.min = this.getMin();
-    }
-
     protected void setSetTimeButton() {
         this.setTimeButton = (Button) this.findViewById(R.id.setTimeButton);
         this.setTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +57,6 @@ public abstract class SleepActivity extends AppCompatActivity {
         });
     }
 
-    protected static String getTimeOfValue(int value) {
-        if (value < 10) {
-            return "0" + String.valueOf(value);
-        } else {
-            return String.valueOf(value);
-        }
-    }
-
-    protected void updateTime(int hours, int minutes) {
-        this.timeText.setText(getTimeToString(hours, minutes));
-        hr = hours;
-        min = minutes;
-    }
-
     protected void setCancelButton() {
         this.cancelButton = (Button) this.findViewById(R.id.cancelButton);
         this.cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -104,24 +67,6 @@ public abstract class SleepActivity extends AppCompatActivity {
                 updateTime(hr, min);
             }
         });
-    }
-
-    protected String getTimeToString(int hr, int min) {
-        String period;
-        if (hr > 12) {
-            hr -= 12;
-            period = "PM";
-        } else if (hr == 12) {
-            period = "PM";
-        } else if (hr == 0) {
-            hr = 12;
-            period = "AM";
-        } else {
-            period = "AM";
-
-        }
-        StringBuffer result = new StringBuffer(getTimeOfValue(hr) + ":" + getTimeOfValue(min) + " " + period);
-        return result.toString();
     }
 
     protected void initializeTimeText(int hours, int minutes) {
@@ -137,5 +82,35 @@ public abstract class SleepActivity extends AppCompatActivity {
 
     protected int getMin() {
         return this.min;
+    }
+
+    /** PRIVATE METHODS */
+    private void updateTime(int hours, int minutes) {
+        this.timeText.setText(TimeUtilTools.getTimeToString(hours, minutes));
+        hr = hours;
+        min = minutes;
+    }
+
+    private void updateTime() {
+        this.hr = this.getHr();
+        this.min = this.getMin();
+    }
+
+    private void onOkClicked(int hour, int minute) {
+        updateTime();
+        this.alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Log.wtf(Strings.WAKE_UP, "ALARM ON");
+        Toast.makeText(this, "ALARM ON", Toast.LENGTH_SHORT).show();
+
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, hour);
+        calendar.set(java.util.Calendar.MINUTE, minute);
+
+        Log.wtf(Strings.SLEEP, "hour: " + hour + "\t" + "min: " + minute);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        this.pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        this.alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10000, pendingIntent);
     }
 }

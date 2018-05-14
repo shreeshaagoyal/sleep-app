@@ -48,8 +48,10 @@ public class WakeUpActivity extends SleepActivity {
 
             @Override
             public void onClick(View view) {
-                alarmManager.cancel(pendingIntent);
-                Log.wtf("TAG", "ALARM OFF");
+                if (alarmManager != null) {
+                    alarmManager.cancel(pendingIntent);
+                }
+                Log.wtf(Strings.WAKE_UP, "ALARM OFF");
                 Toast.makeText(WakeUpActivity.this, "ALARM OFF", Toast.LENGTH_SHORT).show();
             }
         });
