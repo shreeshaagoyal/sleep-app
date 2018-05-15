@@ -32,7 +32,7 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         hr = this.fallAsleepHr;
         min = this.fallAsleepMin;
 
-        setOkButton(this.fallAsleepHr, this.fallAsleepMin);
+        setOkButton(FallAsleepActivity.this, this.fallAsleepHr, this.fallAsleepMin);
         setSetTimeButton();
         setCancelButton();
         initializeTimeText(this.fallAsleepHr, this.fallAsleepMin);

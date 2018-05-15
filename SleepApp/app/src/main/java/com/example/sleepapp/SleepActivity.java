@@ -3,7 +3,10 @@ package com.example.sleepapp;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,12 +31,13 @@ public abstract class SleepActivity extends AppCompatActivity {
     protected PendingIntent pendingIntent;
     protected AlarmManager alarmManager;
 
-    protected void setOkButton(final int hour, final int minute) {
+    protected void setOkButton(final Context context, final int hour, final int minute) {
         this.okButton = (Button) this.findViewById(R.id.ok);
         this.okButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                onOkClicked(hour, minute);
+                onOkClicked(context, hour, minute);
             }
         });
     }
@@ -96,7 +100,8 @@ public abstract class SleepActivity extends AppCompatActivity {
         this.min = this.getMin();
     }
 
-    private void onOkClicked(int hour, int minute) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void onOkClicked(Context context, int hour, int minute) {
         updateTime();
         this.alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -109,8 +114,8 @@ public abstract class SleepActivity extends AppCompatActivity {
 
         Log.wtf(Strings.SLEEP, "hour: " + hour + "\t" + "min: " + minute);
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        this.pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        this.alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10000, pendingIntent);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        this.pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        this.alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }
