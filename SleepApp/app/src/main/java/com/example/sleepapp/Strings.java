@@ -12,4 +12,8 @@ public class Strings {
     public static final String FALL_ASLEEP = "FallAsleepActivity";
     public static final String RECEIVER = "AlarmReceiver";
     public static final String SLEEP = "SleepActivity";
+
+    public static final String STATE = "state";
+    public static final String WANT_TO_STOP = "state_0";
+    public static final String WANT_TO_START = "state_1";
 }

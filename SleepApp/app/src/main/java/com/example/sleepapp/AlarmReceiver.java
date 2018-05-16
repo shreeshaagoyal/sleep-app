@@ -17,13 +17,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "ALARM!", Toast.LENGTH_LONG).show();
-        Log.wtf(Strings.RECEIVER, "In the ScheduledReceiver class! :D");
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
+        String state = intent.getExtras().getString(Strings.STATE);
+        Intent playRingtone = new Intent(context, RingtonePlayingService.class);
+        playRingtone.putExtra(Strings.STATE, state);
+        context.startService(playRingtone);
+
+        Log.wtf("TAG", "STATE: " + state);
     }
 }

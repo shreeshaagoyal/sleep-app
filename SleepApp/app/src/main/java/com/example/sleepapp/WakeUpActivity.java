@@ -1,13 +1,8 @@
 package com.example.sleepapp;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class WakeUpActivity extends SleepActivity {
 
@@ -22,7 +17,9 @@ public class WakeUpActivity extends SleepActivity {
         this.wakeUpHr = getIntent().getIntExtra(Strings.WAKE_UP_HR, 0);
         this.wakeUpMin = getIntent().getIntExtra(Strings.WAKE_UP_MIN, 0);
 
-        setOkButton(WakeUpActivity.this, this.wakeUpHr, this.wakeUpMin);
+        Log.wtf(Strings.WAKE_UP, "this.wakeUpHr" + this.wakeUpHr + "\t" + "this.wakeUpMin" + this.wakeUpMin);
+
+        setOkButton(WakeUpActivity.this);
         setSetTimeButton();
         setCancelButton();
         initializeTimeText(this.wakeUpHr, this.wakeUpMin);
@@ -39,21 +36,5 @@ public class WakeUpActivity extends SleepActivity {
         setResult(RESULT_OK, intent);
 
         finish();
-    }
-
-    @Override
-    protected void setCancelButton() {
-        this.cancelButton = (Button) this.findViewById(R.id.cancelButton);
-        this.cancelButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (alarmManager != null) {
-                    alarmManager.cancel(pendingIntent);
-                }
-                Log.wtf(Strings.WAKE_UP, "ALARM OFF");
-                Toast.makeText(WakeUpActivity.this, "ALARM OFF", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

@@ -1,16 +1,11 @@
 package com.example.sleepapp;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
 public class FallAsleepActivity extends SleepActivity implements AdapterView.OnItemSelectedListener {
@@ -32,7 +27,7 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         hr = this.fallAsleepHr;
         min = this.fallAsleepMin;
 
-        setOkButton(FallAsleepActivity.this, this.fallAsleepHr, this.fallAsleepMin);
+        setOkButton(FallAsleepActivity.this);
         setSetTimeButton();
         setCancelButton();
         initializeTimeText(this.fallAsleepHr, this.fallAsleepMin);
@@ -73,21 +68,5 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         setResult(RESULT_OK, intent);
 
         finish();
-    }
-
-    @Override
-    protected void setCancelButton() {
-        this.cancelButton = (Button) this.findViewById(R.id.cancelButton);
-        this.cancelButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (alarmManager != null) {
-                    alarmManager.cancel(pendingIntent);
-                }
-                Log.wtf(Strings.FALL_ASLEEP, "ALARM OFF");
-                Toast.makeText(FallAsleepActivity.this, "ALARM OFF", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

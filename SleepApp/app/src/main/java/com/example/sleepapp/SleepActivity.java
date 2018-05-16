@@ -30,14 +30,17 @@ public abstract class SleepActivity extends AppCompatActivity {
 
     protected PendingIntent pendingIntent;
     protected AlarmManager alarmManager;
+    protected Intent intent;
+    protected Context context;
 
-    protected void setOkButton(final Context context, final int hour, final int minute) {
+    protected void setOkButton(final Context context) {
+        this.context = context;
         this.okButton = (Button) this.findViewById(R.id.ok);
         this.okButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                onOkClicked(context, hour, minute);
+                onOkClicked(context);
             }
         });
     }
@@ -66,9 +69,15 @@ public abstract class SleepActivity extends AppCompatActivity {
         this.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hr = 0;
-                min = 0;
-                updateTime(hr, min);
+                if (intent != null) {
+                    intent.putExtra(Strings.STATE, Strings.WANT_TO_STOP);
+                    sendBroadcast(intent);
+                    if (alarmManager != null) {
+                        alarmManager.cancel(pendingIntent);
+                    }
+                }
+                Log.wtf(Strings.SLEEP, "ALARM OFF");
+                Toast.makeText(context, "ALARM OFF", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -91,8 +100,8 @@ public abstract class SleepActivity extends AppCompatActivity {
     /** PRIVATE METHODS */
     private void updateTime(int hours, int minutes) {
         this.timeText.setText(TimeUtilTools.getTimeToString(hours, minutes));
-        hr = hours;
-        min = minutes;
+        this.hr = hours;
+        this.min = minutes;
     }
 
     private void updateTime() {
@@ -101,7 +110,7 @@ public abstract class SleepActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void onOkClicked(Context context, int hour, int minute) {
+    private void onOkClicked(Context context) {
         updateTime();
         this.alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -109,13 +118,14 @@ public abstract class SleepActivity extends AppCompatActivity {
         Toast.makeText(this, "ALARM ON", Toast.LENGTH_SHORT).show();
 
         java.util.Calendar calendar = java.util.Calendar.getInstance();
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, hour);
-        calendar.set(java.util.Calendar.MINUTE, minute);
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, this.hr);
+        calendar.set(java.util.Calendar.MINUTE, this.min);
 
-        Log.wtf(Strings.SLEEP, "hour: " + hour + "\t" + "min: " + minute);
+        Log.wtf(Strings.SLEEP, "hour: " + this.hr + "\t" + "min: " + this.min);
 
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        this.pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        this.intent = new Intent(context, AlarmReceiver.class);
+        this.intent.putExtra(Strings.STATE, Strings.WANT_TO_START);
+        this.pendingIntent = PendingIntent.getBroadcast(context, 0, this.intent, 0);
         this.alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }

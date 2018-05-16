@@ -18,6 +18,8 @@
         </activity>
 
         <receiver android:name=".AlarmReceiver" />
+        <service android:name=".RingtonePlayingService" />
+
 
         <activity android:name=".WakeUpActivity" />
         <activity android:name=".FallAsleepActivity" />
