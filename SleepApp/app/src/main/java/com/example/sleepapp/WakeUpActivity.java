@@ -11,6 +11,8 @@ public class WakeUpActivity extends SleepActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.wtf(Strings.WAKE_UP, "hello boys. Wake up activity here");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wake_up);
 

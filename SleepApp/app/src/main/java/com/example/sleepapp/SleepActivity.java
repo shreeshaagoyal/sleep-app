@@ -33,6 +33,11 @@ public abstract class SleepActivity extends AppCompatActivity {
     protected Intent intent;
     protected Context context;
 
+    protected void initSetUp(PendingIntent pendingIntent, AlarmManager alarmManager) {
+        this.pendingIntent = pendingIntent;
+        this.alarmManager = alarmManager;
+    }
+
     protected void setOkButton(final Context context) {
         this.context = context;
         this.okButton = (Button) this.findViewById(R.id.ok);

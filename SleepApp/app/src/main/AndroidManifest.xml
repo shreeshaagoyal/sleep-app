@@ -21,8 +21,12 @@
         <service android:name=".RingtonePlayingService" />
 
 
-        <activity android:name=".WakeUpActivity" />
-        <activity android:name=".FallAsleepActivity" />
+        <activity
+            android:name=".WakeUpActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".FallAsleepActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
