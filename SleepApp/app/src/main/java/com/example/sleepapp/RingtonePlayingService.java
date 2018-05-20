@@ -33,10 +33,10 @@ public class RingtonePlayingService extends Service {
             playRingtone();
             this.isMusicPlaying = true;
         } else if (!this.isMusicPlaying && startId == 0) { // no ringtone playing, want to stop ringtone
-            this.isMusicPlaying = false; // TODO: SEE IF THIS LOC IS NEEDED
+            //this.isMusicPlaying = false; // TODO: SEE IF THIS LOC IS NEEDED
             // no other implementation
         } else if (this.isMusicPlaying && startId == 1) { // ringtone playing, want to start ringtone
-            this.isMusicPlaying = true;
+            //this.isMusicPlaying = true;
         } else { // ringtone playing, want to stop ringtone
             stopRingtone();
             this.isMusicPlaying = false;

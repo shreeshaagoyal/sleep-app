@@ -53,7 +53,6 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         this.duration = TimeUtilTools.getDurationFromPos(pos);
     }
 
-    // TODO: SEE IF THIS METHOD IS NEEDED
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // No implementation needed
