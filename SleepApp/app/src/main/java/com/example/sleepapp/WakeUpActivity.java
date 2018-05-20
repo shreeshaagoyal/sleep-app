@@ -32,11 +32,11 @@ public class WakeUpActivity extends SleepActivity {
         this.wakeUpHr = getHr();
         this.wakeUpMin = getMin();
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Strings.WAKE_UP_HR, this.wakeUpHr);
         intent.putExtra(Strings.WAKE_UP_MIN, this.wakeUpMin);
-        setResult(RESULT_OK, intent);
-
-        finish();
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        //setResult(RESULT_OK, intent);
+        startActivity(intent);
     }
 }

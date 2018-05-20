@@ -64,12 +64,12 @@ public class FallAsleepActivity extends SleepActivity implements AdapterView.OnI
         this.fallAsleepHr = getHr();
         this.fallAsleepMin = getMin();
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Strings.FALL_ASLEEP_HR, this.fallAsleepHr);
         intent.putExtra(Strings.FALL_ASLEEP_MIN, this.fallAsleepMin);
         intent.putExtra(Strings.FALL_ASLEEP_DURATION, this.duration);
-        setResult(RESULT_OK, intent);
-
-        finish();
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        //setResult(RESULT_OK, intent);
+        startActivity(intent);
     }
 }

@@ -22,21 +22,12 @@ public class MainActivity extends AppCompatActivity {
     private int fallAsleepMin;
     private int fallAsleepDuration;
 
-    private Intent wakeUpIntent;
-    private Intent fallAsleepIntent;
-
-    private boolean wakeUpActivityAlive;
-    private boolean fallAsleepActivityAlive;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.wtf(Strings.MAIN, "hello boys. Main activity here");
 
         super.onCreate(savedInstanceState);
         this.setContentView(com.example.sleepapp.R.layout.activity_main);
-
-        this.wakeUpIntent = new Intent(this, WakeUpActivity.class);
-        this.fallAsleepIntent = new Intent(this, FallAsleepActivity.class);
 
         this.fallAsleepDuration = 5;
 
@@ -66,18 +57,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startWakeUpActivity() {
-        this.wakeUpIntent.putExtra(Strings.WAKE_UP_HR, this.wakeUpHr);
-        this.wakeUpIntent.putExtra(Strings.WAKE_UP_MIN, this.wakeUpMin);
-        this.wakeUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivityForResult(this.wakeUpIntent, WAKE_UP_ACTIVITY);
+        Intent wakeUpIntent = new Intent(this, WakeUpActivity.class);
+        wakeUpIntent.putExtra(Strings.WAKE_UP_HR, this.wakeUpHr);
+        wakeUpIntent.putExtra(Strings.WAKE_UP_MIN, this.wakeUpMin);
+        wakeUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityForResult(wakeUpIntent, WAKE_UP_ACTIVITY);
     }
 
     private void startFallAsleepActivity() {
-        this.fallAsleepIntent.putExtra(Strings.FALL_ASLEEP_HR, this.fallAsleepHr);
-        this.fallAsleepIntent.putExtra(Strings.FALL_ASLEEP_MIN, this.fallAsleepMin);
-        this.fallAsleepIntent.putExtra(Strings.FALL_ASLEEP_DURATION, this.fallAsleepDuration);
-        this.fallAsleepIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivityForResult(this.fallAsleepIntent, FALL_ASLEEP_ACTIVITY);
+        Intent fallAsleepIntent = new Intent(this, FallAsleepActivity.class);
+        fallAsleepIntent.putExtra(Strings.FALL_ASLEEP_HR, this.fallAsleepHr);
+        fallAsleepIntent.putExtra(Strings.FALL_ASLEEP_MIN, this.fallAsleepMin);
+        fallAsleepIntent.putExtra(Strings.FALL_ASLEEP_DURATION, this.fallAsleepDuration);
+        fallAsleepIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityForResult(fallAsleepIntent, FALL_ASLEEP_ACTIVITY);
     }
 
     @Override
